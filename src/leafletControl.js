@@ -11,6 +11,7 @@ const defaultOptions = () => ({
   showMarker: true,
   showPopup: false,
   popupFormat: ({ result }) => `${result.label}`,
+  popupOptions: {},
   marker: {
     icon: new L.Icon.Default(),
     draggable: false,
@@ -286,7 +287,7 @@ const Control = {
   },
 
   addMarker(result, query) {
-    const { marker: options, showPopup, popupFormat } = this.options;
+    const { marker: options, showPopup, popupFormat, popupOptions } = this.options;
     const marker = new L.Marker([result.y, result.x], options);
     let popupLabel = result.label;
 
@@ -294,7 +295,7 @@ const Control = {
       popupLabel = popupFormat({ query, result });
     }
 
-    marker.bindPopup(popupLabel);
+    marker.bindPopup(popupLabel, popupOptions);
 
     this.markers.addLayer(marker);
 
